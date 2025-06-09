@@ -1,4 +1,4 @@
-# 🔊 EchoNews — Voice-Driven News Reader
+# 🔊 EchoNews — Voice-Driven News Reader completly built with AI
 
 **EchoNews** is a modern, voice-controlled news application built using React. It lets users interact with and listen to the latest news headlines using simple voice commands — no typing or swiping needed.
 
@@ -37,6 +37,8 @@ npm install
 
 Start Development Server
 
-npm run dev
+npm start
 
-Then open your browser at: http://localhost:5173
+Then open your browser 
+
+main: dont forget to replace your own api news key
