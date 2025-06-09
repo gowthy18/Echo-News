@@ -59,84 +59,43 @@ const NEWS_API_BASE_URL = 'https://newsdata.io/api/1/news';
     fetchNews();
   }, []);
 
-  // const fetchNews = async (term = '', cat = 'general', src = '') => {
-  //   setLoading(true);
-  //   try {
-  //     let url = '';
-      
-  //     // Build API URL based on search criteria
-  //     if (term) {
-  //       url = `${NEWS_API_BASE_URL}/?q=${encodeURIComponent(term)}&sortBy=publishedAt&pageSize=20&apiKey=${NEWS_API_KEY}`;
-  //     } else if (src) {
-  //       url = `${NEWS_API_BASE_URL}/top-headlines?sources=${src}&apiKey=${NEWS_API_KEY}`;
-  //     } else {
-  //       url = `${NEWS_API_BASE_URL}/top-headlines?category=${cat}&country=us&pageSize=20&apiKey=${NEWS_API_KEY}`;
-  //     }
-
-  //     // For demo purposes, we'll use a mock API that simulates real data
-  //     // In production, uncomment the real API call below
-      
-  //     const response = await fetch(url);
-  //     const data = await response.json();
-      
-  //     // Mock response with more diverse content
-  //     const mockData = await getMockNewsData(term, cat, src);
-      
-  //     if (mockData.articles) {
-  //       setArticles(mockData.articles);
-  //       setCurrentArticle(0);
-  //     } else {
-  //       setArticles([]);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching news:', error);
-  //     setArticles([]);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const fetchNews = async (term = '', cat = 'general', src = '') => {
-  setLoading(true);
-  try {
-    let url = `${NEWS_API_BASE_URL}?apikey=${NEWS_API_KEY}&country=us&language=en`;
-
-    if (term) {
-      url += `&q=${encodeURIComponent(term)}`;
-    }
-
-    if (cat) {
-      url += `&category=${cat}`;
-    }
-
-    if (src) {
-      url += `&domain=${src}`;
-    }
-
-    let articles;
+    setLoading(true);
     try {
+      let url = '';
+      
+      // Build API URL based on search criteria
+      if (term) {
+        url = `${NEWS_API_BASE_URL}/?q=${encodeURIComponent(term)}&sortBy=publishedAt&pageSize=20&apiKey=${NEWS_API_KEY}`;
+      } else if (src) {
+        url = `${NEWS_API_BASE_URL}/top-headlines?sources=${src}&apiKey=${NEWS_API_KEY}`;
+      } else {
+        url = `${NEWS_API_BASE_URL}/top-headlines?category=${cat}&country=us&pageSize=20&apiKey=${NEWS_API_KEY}`;
+      }
+
+      // For demo purposes, we'll use a mock API that simulates real data
+      // In production, uncomment the real API call below
+      
       const response = await fetch(url);
       const data = await response.json();
-      articles = data.results || [];
-    } catch (err) {
-      console.warn('API error, using mock data:', err);
+      
+      // Mock response with more diverse content
       const mockData = await getMockNewsData(term, cat, src);
-      articles = mockData.articles;
-    }
-
-    if (articles.length > 0) {
-      setArticles(articles);
-      setCurrentArticle(0);
-    } else {
+      
+      if (mockData.articles) {
+        setArticles(mockData.articles);
+        setCurrentArticle(0);
+      } else {
+        setArticles([]);
+      }
+    } catch (error) {
+      console.error('Error fetching news:', error);
       setArticles([]);
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.error('Error fetching news:', error);
-    setArticles([]);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
+  
 
   const getMockNewsData = async (term = '', cat = 'general', src = '') => {
     // Simulate API delay
